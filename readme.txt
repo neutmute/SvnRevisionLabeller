@@ -6,7 +6,7 @@ SVN Revision Labeller is a plugin for CruiseControl.NET that allows you to gener
 Requirements
 ------------
 
-* CruiseControl.NET v1.4.4 RC2 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 2.0, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET, due to breaking changes introduced. If you want to run v1.4.3 or earlier, you will need v1.0.3.25899 of SvnRevisionLabeller.
+* CruiseControl.NET v1.4.4 SP1 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 2.0, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET, due to breaking changes introduced. If you want to run v1.4.3 or earlier, you will need v1.0.3.25899 of SvnRevisionLabeller.
 
 Installation
 ------------
