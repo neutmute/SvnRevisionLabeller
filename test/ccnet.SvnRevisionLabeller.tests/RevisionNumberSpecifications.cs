@@ -9,6 +9,10 @@ namespace CcNet.Labeller.Tests
 	[TestFixture]
 	public class WhenRevisionPropertyIsNotSetAndLabelIsGeneratedAfterASuccessfulBuild : Specification
 	{
+		private SvnRevisionLabellerStub _labeller;
+		private IIntegrationResult _previousResult;
+		private string _label;
+
 		protected override void Arrange()
 		{
 			_previousResult = Mockery.DynamicMock<IIntegrationResult>();
@@ -35,9 +39,5 @@ namespace CcNet.Labeller.Tests
 		{
 			Assert.That(_label, Is.EqualTo("1.0.0.105"));
 		}
-
-		private SvnRevisionLabellerStub _labeller;
-		private IIntegrationResult _previousResult;
-		private string _label;
 	}
 }

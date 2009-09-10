@@ -254,16 +254,14 @@ namespace CcNet.Labeller
 			argBuilder.AppendArgument("--limit 1");
 			argBuilder.AddArgument(Quote(Url));
 
-			// use the trust switch if user has indicated such
 			if (TrustServerCertificate)
 			{
 				argBuilder.AppendArgument("--trust-server-cert");
 			}
 
-			// determine whether to add username/password
 			if (!String.IsNullOrEmpty(Username))
 			{
-				AppendCommonSwitches(argBuilder); 
+				AppendCommonSwitches(argBuilder);
 			}
 
 			// Run the svn log command and capture the results
@@ -330,7 +328,6 @@ namespace CcNet.Labeller
 		{
 			// prepare process
 			ProcessInfo info = new ProcessInfo(Executable, arguments.ToString());
-			Log.Debug("Running Subversion with arguments : " + info.Arguments);
 
 			// execute process
 			ProcessExecutor executor = new ProcessExecutor();

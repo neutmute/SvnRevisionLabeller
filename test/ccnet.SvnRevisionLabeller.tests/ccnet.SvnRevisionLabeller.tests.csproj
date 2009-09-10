@@ -55,11 +55,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WhenCustomPatternIsSet.cs" />
+    <Compile Include="CustomPatternSpecifications.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification.cs" />
     <Compile Include="SvnRevisionLabellerStub.cs" />
-    <Compile Include="WhenBuildPropertyIsNotSetAndLabelIsGenerated.cs" />
+    <Compile Include="RevisionNumberSpecifications.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\ccnet.SvnRevisionLabeller.plugin\ccnet.SvnRevisionLabeller.plugin.csproj">
