@@ -6,7 +6,7 @@ SVN Revision Labeller is a plugin for CruiseControl.NET that allows you to gener
 Requirements
 ------------
 
-* CruiseControl.NET v1.4.4 SP1 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 2.0, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET, due to breaking changes introduced. If you want to run v1.4.3 or earlier, you will need v1.0.3.25899 of SvnRevisionLabeller.
+* CruiseControl.NET v1.5 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 2.0, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET, due to breaking changes introduced. If you want to run v1.4.3 or earlier, you will need v1.0.3.25899 of SvnRevisionLabeller.
 
 Installation
 ------------
@@ -35,6 +35,7 @@ The following sample configuration shows the complete set of fields:
 	<executable>C:\Svn\Bin\svn.exe</executable>
 	<username>ccnetuser</username>
 	<password>ccnetpassword</password>
+	<startDate>25/10/2010</startDate>
 </labeller>
 
 Usage
@@ -68,10 +69,17 @@ The available tokens are:
 	{build} - the build number 
 	{revision} - the revision number
 	{rebuild} - the number of times the build has been rebuilt (i.e. a forced build)
+	{date} - the number of days elapsed since the date specified in the startDate field
+	{msrevision} - the revision number that Microsoft calculates - the number of seconds since midnight, divided by two
 
 History
 -------
 
+3.1.0.32163
+	* NEW - added new {date} token to allow build numbers to be based on days elapsed since a given date;
+	* NEW - add new {msrevision} token to allow revision numbers to be based on the Microsoft calcuation
+3.0.0.24792
+	* FIX - now runs against CC.NET v1.5;
 2.0.0.20990
 	* FIX - now runs against CC.NET v1.4.4 RC2;
 	* NEW - greater control over the formatting of the build label (patch provided by fezguy); the prefix and postfix fields have been removed from configuration, since they are now replaced by the Pattern field, and by default, rebuilds are not counted. To reproduce the original behaviour of the plugin, you would want a Pattern similar to "{major}.{minor}.{revision}.{rebuilt}", so that successive forced builds without a new Subversion commit increments the version number by 1.
