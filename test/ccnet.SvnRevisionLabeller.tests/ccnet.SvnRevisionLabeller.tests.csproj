@@ -7,7 +7,7 @@
     <ProjectGuid>{7DEB7A0F-48E6-43AD-9964-D31DC2BA6FE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ccnet.labeller.tests</RootNamespace>
+    <RootNamespace>CcNet.Labeller.Tests</RootNamespace>
     <AssemblyName>ccnet.SvnRevisionLabeller.tests</AssemblyName>
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
@@ -55,7 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MsRevisionSpecifications.cs" />
     <Compile Include="CustomPatternSpecifications.cs" />
+    <Compile Include="DateSpecifications.cs" />
+    <Compile Include="FakeSystemClock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification.cs" />
     <Compile Include="SvnRevisionLabellerStub.cs" />

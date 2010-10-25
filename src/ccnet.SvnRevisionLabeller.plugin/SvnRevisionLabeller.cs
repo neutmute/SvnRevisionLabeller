@@ -47,7 +47,10 @@ namespace CcNet.Labeller
 		private const string BuildToken = "{build}";
 		private const string RevisionToken = "{revision}";
 		private const string RebuildToken = "{rebuild}";
+		private const string DateToken = "{date}";
+		private const string MsRevisionToken = "{msrevision}";
 		private const string RevisionXPath = "/log/logentry/@revision";
+		private readonly ISystemClock _systemClock;
 		private int _rebuild;
 
 		#region Constructors
@@ -55,8 +58,19 @@ namespace CcNet.Labeller
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SvnRevisionLabeller"/> class.
 		/// </summary>
-		public SvnRevisionLabeller()
+		public SvnRevisionLabeller() : this(new SystemClock())
 		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SvnRevisionLabeller"/> class.
+		/// </summary>
+		/// <param name="systemClock">The system clock implementation that will be used when calculating date-based
+		/// revision numbers.</param>
+		public SvnRevisionLabeller(ISystemClock systemClock)
+		{
+			_systemClock = systemClock;
+
 			Major = 1;
 			Minor = 0;
 			Build = -1;
@@ -156,6 +170,14 @@ namespace CcNet.Labeller
 		[ReflectorProperty("trustServerCertificate", Required = false)]
 		public bool TrustServerCertificate { get; set; }
 
+		/// <summary>
+		/// Gets or sets the start date that date-based build numbers will be calculated from.
+		/// </summary>
+		/// <value>The start date that date-based build numbers will be calculated from. Build numbers
+		/// will be the number of days sicne the specified date.</value>
+		[ReflectorProperty("startDate", Required = false)]
+		public string StartDate { get; set; }
+
 		#endregion
 
 		#region Methods
@@ -227,14 +249,47 @@ namespace CcNet.Labeller
 				_rebuild++;
 			}
 
+			int elapsedDays = CalculateElapsedDays(StartDate, _systemClock.Now);
+			int msRevision = CalculateMsRevision(_systemClock.Today, _systemClock.Now);
+
 			// Replace the tokens in the pattern with the appropriate string formatting placeholders
 			string format = Pattern.Replace(MajorToken, "{0}")
 				.Replace(MinorToken, "{1}")
 				.Replace(BuildToken, "{2}")
 				.Replace(RevisionToken, "{3}")
-				.Replace(RebuildToken, "{4}");
+				.Replace(RebuildToken, "{4}")
+				.Replace(DateToken, "{5}")
+				.Replace(MsRevisionToken, "{6}");
 
-			return String.Format(format, Major, Minor, build, revision, _rebuild);
+			return String.Format(format, Major, Minor, build, revision, _rebuild, elapsedDays, msRevision);
+		}
+
+		/// <summary>
+		/// Calculates the revision using the standard Microsoft format, being the number of
+		/// seconds since midnight divided by 2.
+		/// </summary>
+		/// <param name="startDate">The start date.</param>
+		/// <param name="currentDate">The current date.</param>
+		/// <returns>The number of seconds since midnight, divided by 2.</returns>
+		private static int CalculateMsRevision(DateTime startDate, DateTime currentDate)
+		{
+			return (int)((currentDate - startDate).TotalSeconds / 2);
+		}
+
+		/// <summary>
+		/// Calculates the number of elapsed days.
+		/// </summary>
+		/// <param name="startDate">The start date, parsed from the labeller's configuration.</param>
+		/// <param name="currentDate">The current date.</param>
+		/// <returns>An integer representing the number of elapsed days between the
+		/// two specified dates. If the <c>startDate</c> string value cannot be parsed, <c>0</c>
+		/// will be returned.</returns>
+		private static int CalculateElapsedDays(string startDate, DateTime currentDate)
+		{
+			DateTime calculateFrom;
+			return DateTime.TryParse(startDate, out calculateFrom)
+				? (int)((currentDate - calculateFrom).TotalDays)
+				: 0;
 		}
 
 		/// <summary>
