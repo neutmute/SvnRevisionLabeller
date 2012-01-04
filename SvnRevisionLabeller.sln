@@ -1,5 +1,5 @@
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.SvnRevisionLabeller.plugin", "src\ccnet.SvnRevisionLabeller.plugin\ccnet.SvnRevisionLabeller.plugin.csproj", "{A0CA66FE-0C8D-4CD1-AF45-EA6E18D57ACC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.SvnRevisionLabeller.tests", "test\ccnet.SvnRevisionLabeller.tests\ccnet.SvnRevisionLabeller.tests.csproj", "{7DEB7A0F-48E6-43AD-9964-D31DC2BA6FE0}"
