@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfoPathSpecification.cs" />
     <Compile Include="MsRevisionSpecifications.cs" />
     <Compile Include="CustomPatternSpecifications.cs" />
     <Compile Include="DateSpecifications.cs" />

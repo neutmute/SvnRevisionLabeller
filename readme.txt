@@ -75,6 +75,9 @@ The available tokens are:
 
 History
 -------
+3.2.1
+	* NEW - Added new property assemblyInfoPath to read the Major & Minor version from a .cs source file. This minimises the amount of config in CruiseControl.
+			major/minor config elements need not be supplied when assemblyInfoPath is used.
 3.2
 	* FIX - now runs against CC.NET v1.6;
 3.1.0.32163

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
@@ -101,6 +102,13 @@ namespace CcNet.Labeller
         public int Minor { get; set; }
 
         /// <summary>
+        /// Path to the AssemblyInfo.cs file that has the Major/Minor specified in an AssemblyVersion attribute.
+        /// If specified, overrides the Major/Minor properties
+        /// </summary>
+        [ReflectorProperty("assemblyInfoPath", Required = false)]
+        public string AssemblyInfoPath { get; set; }
+
+        /// <summary>
         /// Gets or sets the build number.
         /// </summary>
         /// <value>The build number.</value>
@@ -201,8 +209,12 @@ namespace CcNet.Labeller
         /// <exception cref="System.ArgumentNullException">Thrown when an error occurs while formatting the version number and an argument has not been specified.</exception>
         public string Generate(IIntegrationResult resultFromLastBuild)
         {
+            Log.Trace("SvnRevisionLabeller running");
+
             // get last revision from Subversion
             int revision = GetRevision();
+
+            ParseAssemblyInfoVersion();
 
             // get last revision from CC
             Version lastVersion = ParseVersion(revision, resultFromLastBuild);
@@ -262,7 +274,9 @@ namespace CcNet.Labeller
                 .Replace(DateToken, "{5}")
                 .Replace(MsRevisionToken, "{6}");
 
-            return String.Format(format, Major, Minor, build, revision, _rebuild, elapsedDays, msRevision);
+            string label = String.Format(format, Major, Minor, build, revision, _rebuild, elapsedDays, msRevision);
+            Log.Trace("Label = {0}", label);;
+            return label;
         }
 
         /// <summary>
@@ -391,6 +405,40 @@ namespace CcNet.Labeller
 
             // return results
             return result;
+        }
+
+        /// <summary>
+        /// Extract - if available - the major/minor from the specified path
+        /// </summary>
+        private void ParseAssemblyInfoVersion()
+        {
+            if (File.Exists(AssemblyInfoPath))
+            {
+                string filename = Path.GetFileName(AssemblyInfoPath);
+                Log.Info("{0} will be parsed for major.minor", filename);
+                string fileContents = File.ReadAllText(AssemblyInfoPath);
+
+                Regex regex = new Regex(@"AssemblyVersion\x28\""(\d).(\d).*\x29");
+                Match match = regex.Match(fileContents);
+
+                if (match.Success)
+                {
+                    int major, minor;
+                    bool parseSuccess = Int32.TryParse(match.Groups[1].Value, out major);
+                    parseSuccess &= Int32.TryParse(match.Groups[2].Value, out minor);
+
+                    if (parseSuccess)
+                    {
+                        Log.Info("Major.minor = {0}.{1}", major, minor);
+                        Major = major;
+                        Minor = minor;
+                    }
+                    else
+                    {
+                        Log.Warning("Failed to parse {0} for major/minor", filename);
+                    }
+                }
+            }
         }
 
         /// <summary>
