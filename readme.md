@@ -20,6 +20,7 @@ Configuration
 
 Below is a sample configuration for svnRevisionLabeller, showing the mandatory fields:
 
+`
 <labeller type="svnRevisionLabeller">
 	<url>svn://localhost/repository/trunk</url>
 </labeller>
@@ -39,6 +40,7 @@ The following sample configuration shows the complete set of fields:
 	<password>ccnetpassword</password>
 	<startDate>25/10/2010</startDate>
 </labeller>
+`
 
 Usage
 -----
@@ -76,31 +78,45 @@ The available tokens are:
 
 History
 -------
-3.8.0
-	* Retargeted against CC.NET 1.8
-3.2.1
-	* NEW - Added new property assemblyInfoPath to read the Major & Minor version from a .cs source file. This minimises the amount of config in CruiseControl.
-			major/minor config elements need not be supplied when assemblyInfoPath is used.
-3.2
-	* FIX - now runs against CC.NET v1.6;
-3.1.0.32163
-	* NEW - added new {date} token to allow build numbers to be based on days elapsed since a given date;
-	* NEW - add new {msrevision} token to allow revision numbers to be based on the Microsoft calcuation
-3.0.0.24792
-	* FIX - now runs against CC.NET v1.6;
-2.0.0.20990
-	* FIX - now runs against CC.NET v1.4.4 RC2;
-	* NEW - greater control over the formatting of the build label (patch provided by fezguy); the prefix and postfix fields have been removed from configuration, since they are now replaced by the Pattern field, and by default, rebuilds are not counted. To reproduce the original behaviour of the plugin, you would want a Pattern similar to "{major}.{minor}.{revision}.{rebuilt}", so that successive forced builds without a new Subversion commit increments the version number by 1.
+**3.8.0**
 
-1.0.3.25899
-	* FIX - the username and password attributes are swapped around (fix provided by Tony Mitchell);
+- Retargeted against CC.NET 1.8
 
-1.0.2.16573
-	* Now built against CC.NET v1.3, and tested against CC.NET v1.3
-	* FIX - the revision number does not increase on successive builds if a prefix is specified (fix provided by Mike Usner);
-	* FIX - if no working copy exists, then the labeller will not be able to work out what the current revision is, and throw an exception (fix provided by Matteo Tontini);
+**3.2.1**
 
-1.0.1.21635
-	* Built against CC.NET v1.1, and tested against CC.NET v1.1 and v2.0;
-	* initial public release;
+- NEW - Added new property assemblyInfoPath to read the Major & Minor version from a .cs source file. This minimises the amount of config in CruiseControl.
+- major/minor config elements need not be supplied when assemblyInfoPath is used.
+
+**3.2**
+
+- FIX - now runs against CC.NET v1.6;
+
+**3.1.0.32163**
+
+- NEW - added new {date} token to allow build numbers to be based on days elapsed since a given date;
+- NEW - add new {msrevision} token to allow revision numbers to be based on the Microsoft calcuation
+
+**3.0.0.24792**
+
+- FIX - now runs against CC.NET v1.6;
+
+**2.0.0.20990**
+
+- FIX - now runs against CC.NET v1.4.4 RC2;
+- NEW - greater control over the formatting of the build label (patch provided by fezguy); the prefix and postfix fields have been removed from configuration, since they are now replaced by the Pattern field, and by default, rebuilds are not counted. To reproduce the original behaviour of the plugin, you would want a Pattern similar to "{major}.{minor}.{revision}.{rebuilt}", so that successive forced builds without a new Subversion commit increments the version number by 1.
+
+**1.0.3.25899**
+
+- FIX - the username and password attributes are swapped around (fix provided by Tony Mitchell);
+
+**1.0.2.16573**
+
+- Now built against CC.NET v1.3, and tested against CC.NET v1.3
+- FIX - the revision number does not increase on successive builds if a prefix is specified (fix provided by Mike Usner);
+- FIX - if no working copy exists, then the labeller will not be able to work out what the current revision is, and throw an exception (fix provided by Matteo Tontini);
+
+**1.0.1.21635**
+
+- Built against CC.NET v1.1, and tested against CC.NET v1.1 and v2.0;
+- initial public release;
 
