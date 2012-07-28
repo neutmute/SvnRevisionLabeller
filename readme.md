@@ -2,12 +2,13 @@ SVN Revision Labeller
 ---------------------
 
 SVN Revision Labeller is a plugin for CruiseControl.NET that allows you to generate CruiseControl labels for your builds, based upon the revision number of your Subversion working copy.
-This is a GitHub fork of the abandoned project at http://code.google.com/p/svnrevisionlabeller/
+
+*This is a GitHub fork of the abandoned project at http://code.google.com/p/svnrevisionlabeller/*
 
 Requirements
 ------------
 
-* CruiseControl.NET v1.6 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 3.5, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET.
+* CruiseControl.NET v1.8 - the plugin has been compiled and tested against this version of CC.NET. As such, it uses the .NET Framework 3.5, and is not backwards compatible with previous versions of CC.NET. If you cannot upgrade to this version of CC.NET and want to use this plugin, you can rebuild from the source code, but your will need to replace the solution and project files to work with Visual Studio 2003/2005. This release is *not* compatible with earlier releases of CC.NET.
 
 Installation
 ------------
@@ -75,6 +76,8 @@ The available tokens are:
 
 History
 -------
+3.8.0
+	* Retargeted against CC.NET 1.8
 3.2.1
 	* NEW - Added new property assemblyInfoPath to read the Major & Minor version from a .cs source file. This minimises the amount of config in CruiseControl.
 			major/minor config elements need not be supplied when assemblyInfoPath is used.
