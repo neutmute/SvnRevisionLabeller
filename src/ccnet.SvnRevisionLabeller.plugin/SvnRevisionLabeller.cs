@@ -412,31 +412,53 @@ namespace CcNet.Labeller
         /// </summary>
         private void ParseAssemblyInfoVersion()
         {
-            if (File.Exists(AssemblyInfoPath))
+            if (!string.IsNullOrEmpty(AssemblyInfoPath))
             {
-                string filename = Path.GetFileName(AssemblyInfoPath);
-                Log.Info("{0} will be parsed for major.minor", filename);
-                string fileContents = File.ReadAllText(AssemblyInfoPath);
+                string[] paths = AssemblyInfoPath.Split(',');
+                bool majorMinorSet = false;
+                int pathIndex = 0;
 
-                Regex regex = new Regex(@"AssemblyVersion\x28\""(\d).(\d).*\x29");
-                Match match = regex.Match(fileContents);
-
-                if (match.Success)
+                while (!majorMinorSet && pathIndex < paths.Length)
                 {
-                    int major, minor;
-                    bool parseSuccess = Int32.TryParse(match.Groups[1].Value, out major);
-                    parseSuccess &= Int32.TryParse(match.Groups[2].Value, out minor);
+                    Log.Info("{0} paths will be checked for major/minor version info", paths.Length);
 
-                    if (parseSuccess)
+                    var testingPath = paths[pathIndex];
+                    if (File.Exists(testingPath))
                     {
-                        Log.Info("Major.minor = {0}.{1}", major, minor);
-                        Major = major;
-                        Minor = minor;
+                        Log.Info("Assembly Major/Minor parsing: Opening ({1}) '{0}'", testingPath, pathIndex);
+                        string fileContents = File.ReadAllText(testingPath);
+
+                        Regex regex = new Regex(@"AssemblyVersion\x28\""(\d).(\d).*\x29");
+                        Match match = regex.Match(fileContents);
+
+                        if (match.Success)
+                        {
+                            int major, minor;
+                            bool parseSuccess = Int32.TryParse(match.Groups[1].Value, out major);
+                            parseSuccess &= Int32.TryParse(match.Groups[2].Value, out minor);
+
+                            if (parseSuccess)
+                            {
+                                Log.Info("Major.minor = {0}.{1}", major, minor);
+                                Major = major;
+                                Minor = minor;
+                                majorMinorSet = true;
+                            }
+                            else
+                            {
+                                Log.Warning("Failed to parse {0} for major/minor", testingPath);
+                            }
+                        }
+                        else
+                        {
+                            Log.Info("Assembly Major/Minor parsing: No version info found ({1}) '{0}'", testingPath, pathIndex);
+                        }
                     }
                     else
                     {
-                        Log.Warning("Failed to parse {0} for major/minor", filename);
+                        Log.Info("Assembly Major/Minor parsing: File not found ({1}) '{0}'", testingPath, pathIndex);
                     }
+                    pathIndex++;
                 }
             }
         }
