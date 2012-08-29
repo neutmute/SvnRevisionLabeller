@@ -1,8 +1,13 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.SvnRevisionLabeller.plugin", "src\ccnet.SvnRevisionLabeller.plugin\ccnet.SvnRevisionLabeller.plugin.csproj", "{A0CA66FE-0C8D-4CD1-AF45-EA6E18D57ACC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.Labeller.plugin", "src\ccnet.SvnRevisionLabeller.plugin\ccnet.Labeller.plugin.csproj", "{A0CA66FE-0C8D-4CD1-AF45-EA6E18D57ACC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.SvnRevisionLabeller.tests", "test\ccnet.SvnRevisionLabeller.tests\ccnet.SvnRevisionLabeller.tests.csproj", "{7DEB7A0F-48E6-43AD-9964-D31DC2BA6FE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccnet.Labeller.tests", "test\ccnet.SvnRevisionLabeller.tests\ccnet.Labeller.tests.csproj", "{7DEB7A0F-48E6-43AD-9964-D31DC2BA6FE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{A60D607D-AD44-4AE4-903E-F5FE8E60E7B7}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
